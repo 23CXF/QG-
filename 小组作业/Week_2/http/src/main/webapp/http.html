@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaWeb Demo</title>
+</head>
+<body>
+<div id="app">
+    <input type="text" id="paramInput" placeholder="输入请求参数">
+    <button onclick="sendRequest('GET')">发送GET请求</button>
+    <button onclick="sendRequest('POST')">发送POST请求</button>
+    <button onclick="sendRequest('PUT')">发送PUT请求</button>
+    <button onclick="sendRequest('DELETE')">发送DELETE请求</button>
+    <p id="response"></p>
+</div>
+
+<script>
+    function sendRequest(method) {
+        var param = document.getElementById("paramInput").value;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4) {
+                if (this.status == 200) {
+                    document.getElementById("response").innerHTML = this.responseText;
+                } else {
+                    document.getElementById("response").innerHTML = "请求失败，状态码：" + this.status;
+                }
+            }
+        };
+        xhttp.open(method, "DataServlet?param=" + param, true);
+        xhttp.send();
+    }
+</script>
+</body>
+</html>
